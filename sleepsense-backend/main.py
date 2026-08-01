@@ -36,6 +36,37 @@ async def lifespan(app: FastAPI):
     # Create all DB tables (idempotent)
     Base.metadata.create_all(bind=engine)
     logger.info("✅ Database tables ready")
+    # Auto-seed on first run (idempotent — skips if users exist)
+    try:
+        from app.core.database import SessionLocal
+        from app.models.user import User, UserRole, UserStatus
+        from app.core.security import get_password_hash
+        db = SessionLocal()
+        if db.query(User).count() == 0:
+            admin = User(
+                email="admin@sleepsense.ai",
+                username="admin",
+                full_name="SleepSense Admin",
+                hashed_password=get_password_hash("Admin@123456"),
+                role=UserRole.ADMIN,
+                status=UserStatus.ACTIVE,
+                is_email_verified=True,
+            )
+            demo = User(
+                email="demo@sleepsense.ai",
+                username="demouser",
+                full_name="Demo User",
+                hashed_password=get_password_hash("Demo@123456"),
+                role=UserRole.USER,
+                status=UserStatus.ACTIVE,
+                is_email_verified=True,
+            )
+            db.add_all([admin, demo])
+            db.commit()
+            logger.info("✅ Default users seeded")
+        db.close()
+    except Exception as e:
+        logger.warning(f"Seeding skipped: {e}")
     yield
     logger.info("🛑 Shutting down SleepSense AI API")
 
