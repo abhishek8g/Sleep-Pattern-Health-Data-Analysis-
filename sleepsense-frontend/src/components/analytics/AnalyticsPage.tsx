@@ -164,7 +164,7 @@ export function AnalyticsPage() {
                 {pieData.map((entry, i) => (
                   <div key={entry.name} className="flex items-center justify-between text-xs">
                     <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full" style={{ background: COLORS[i % COLORS.length] }} /><span className="text-gray-400 capitalize">{entry.name}</span></span>
-                    <span className="text-white font-medium">{entry.value}</span>
+                    <span className="text-white font-medium">{String(entry.value)}</span>
                   </div>
                 ))}
               </div>
