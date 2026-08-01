@@ -1,0 +1,116 @@
+name: SleepSense AI CI/CD
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ─── Backend Tests ──────────────────────────────────────────────────
+  backend-test:
+    name: Backend Tests (Python)
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: sleepsense
+          POSTGRES_PASSWORD: sleepsense123
+          POSTGRES_DB: sleepsense_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        working-directory: sleepsense-backend
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        working-directory: sleepsense-backend
+        env:
+          DATABASE_URL: sqlite://
+          JWT_SECRET_KEY: test-secret-key-at-least-32-characters-long
+          GEMINI_API_KEY: test-key
+          CLOUDINARY_CLOUD_NAME: test
+          CLOUDINARY_API_KEY: test
+          CLOUDINARY_API_SECRET: test
+          SMTP_USER: test@test.com
+          SMTP_PASSWORD: testpass
+          REDIS_URL: redis://localhost:6379
+        run: pytest tests/ -v --tb=short
+
+  # ─── Frontend Checks ────────────────────────────────────────────────
+  frontend-check:
+    name: Frontend Type Check & Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+          cache-dependency-path: sleepsense-frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: sleepsense-frontend
+        run: npm ci
+
+      - name: TypeScript type check
+        working-directory: sleepsense-frontend
+        run: npm run type-check
+
+      - name: ESLint
+        working-directory: sleepsense-frontend
+        run: npm run lint
+
+  # ─── Build Docker Images ────────────────────────────────────────────
+  docker-build:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+    needs: [backend-test, frontend-check]
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build backend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./sleepsense-backend
+          push: false
+          tags: sleepsense-backend:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build frontend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./sleepsense-frontend
+          push: false
+          tags: sleepsense-frontend:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

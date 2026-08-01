@@ -1,0 +1,66 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+.Python
+venv/
+env/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Database (local dev SQLite)
+*.sqlite
+*.db
+*.sqlite3
+sleepsense-backend/sleepsense_dev.db
+
+# Environment files — never commit secrets
+.env
+.env.local
+.env.production
+.env.*.local
+# Keep examples
+!.env.example
+!sleepsense-backend/.env.example
+!sleepsense-frontend/.env.example
+
+# Node
+node_modules/
+.next/
+out/
+.vercel/
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/settings.json
+.idea/
+*.swp
+
+# Testing / coverage
+coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+jest-results/
+*.tsbuildinfo
+
+# Docker
+*.tar
+
+# Uploads
+uploads/
+
+# Alembic versions cache
+alembic/versions/__pycache__/

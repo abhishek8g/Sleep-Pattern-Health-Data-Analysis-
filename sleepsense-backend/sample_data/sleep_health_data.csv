@@ -1,0 +1,51 @@
+person_id,age,gender,occupation,sleep_duration,sleep_quality,physical_activity_level,stress_level,bmi_category,blood_pressure,heart_rate,daily_steps,sleep_disorder
+1,27,Male,Software Engineer,6.1,6,42,6,Overweight,126/83,77,4200,None
+2,28,Female,Doctor,6.2,6,60,8,Normal,125/80,75,10000,None
+3,28,Male,Doctor,6.2,6,60,8,Normal,125/80,75,10000,None
+4,28,Female,Sales Representative,5.9,4,30,8,Obese,140/90,85,3000,Sleep Apnea
+5,28,Male,Sales Representative,5.9,4,30,8,Obese,140/90,85,3000,Sleep Apnea
+6,28,Male,Software Engineer,5.9,4,30,8,Obese,140/90,85,3000,Insomnia
+7,29,Male,Teacher,6.3,6,40,7,Normal Weight,120/80,72,8000,None
+8,29,Female,Doctor,7.8,7,75,5,Normal,120/80,70,12000,None
+9,29,Male,Nurse,6.1,5,40,7,Normal,132/87,78,5000,Insomnia
+10,30,Female,Engineer,7.0,7,60,5,Normal,120/80,72,8000,None
+11,30,Male,Accountant,5.9,5,30,8,Obese,140/95,86,3000,Sleep Apnea
+12,30,Female,Teacher,7.5,7,75,5,Normal,118/78,68,12000,None
+13,31,Male,Software Engineer,6.3,5,40,7,Overweight,130/86,78,5000,None
+14,31,Female,Nurse,7.2,7,65,6,Normal,120/80,70,8000,None
+15,31,Male,Manager,7.0,7,55,6,Normal Weight,120/80,72,9000,None
+16,32,Female,Lawyer,6.0,5,30,8,Overweight,130/90,80,4000,Insomnia
+17,32,Male,Doctor,7.5,7,60,5,Normal,120/80,70,10000,None
+18,32,Female,Accountant,6.0,5,45,8,Obese,140/95,88,3000,Sleep Apnea
+19,33,Male,Teacher,7.3,7,65,5,Normal,118/78,68,10000,None
+20,33,Female,Software Engineer,6.2,5,40,7,Normal Weight,128/84,76,5000,None
+21,34,Male,Nurse,6.5,6,50,6,Normal,125/82,74,7000,None
+22,34,Female,Manager,7.8,8,80,3,Normal,115/76,65,14000,None
+23,35,Male,Doctor,7.2,7,70,4,Normal,118/78,68,11000,None
+24,35,Female,Lawyer,5.8,4,25,9,Obese,145/95,90,2500,Sleep Apnea
+25,36,Male,Engineer,7.5,7,65,5,Normal,120/80,70,9000,None
+26,36,Female,Teacher,7.0,6,55,6,Normal Weight,122/82,72,8000,None
+27,37,Male,Accountant,5.6,4,20,9,Obese,142/92,88,2000,Insomnia
+28,37,Female,Nurse,6.8,6,55,6,Normal,122/82,72,8000,None
+29,38,Male,Software Engineer,6.0,5,35,7,Overweight,132/88,80,4500,None
+30,38,Female,Doctor,7.8,8,75,4,Normal,116/76,66,12000,None
+31,39,Male,Manager,6.5,6,50,7,Normal Weight,128/84,76,7000,None
+32,39,Female,Sales Representative,5.5,3,20,9,Obese,145/95,92,2000,Sleep Apnea
+33,40,Male,Teacher,7.3,7,60,5,Normal,120/80,70,9000,None
+34,40,Female,Engineer,6.8,6,55,6,Normal,122/82,72,8000,None
+35,41,Male,Nurse,5.9,5,40,8,Overweight,135/88,82,4000,Insomnia
+36,41,Female,Doctor,7.5,8,70,4,Normal,116/76,66,11000,None
+37,42,Male,Accountant,6.2,5,35,7,Normal Weight,128/84,76,5500,None
+38,42,Female,Manager,7.8,8,80,3,Normal,115/75,64,14000,None
+39,43,Male,Software Engineer,5.8,4,30,8,Obese,138/92,86,3500,Sleep Apnea
+40,43,Female,Teacher,7.0,7,60,5,Normal,120/80,70,9000,None
+41,44,Male,Lawyer,6.5,6,45,7,Normal,125/82,74,6500,None
+42,44,Female,Nurse,7.3,7,65,5,Normal,118/78,68,10000,None
+43,45,Male,Doctor,7.8,8,75,3,Normal,115/76,65,12000,None
+44,45,Female,Engineer,6.2,5,40,7,Overweight,130/86,78,5000,None
+45,46,Male,Manager,6.8,7,55,6,Normal Weight,122/82,72,8000,None
+46,46,Female,Accountant,5.6,4,20,9,Obese,145/95,90,2000,Insomnia
+47,47,Male,Teacher,7.5,7,65,4,Normal,118/78,68,10000,None
+48,47,Female,Sales Representative,5.4,3,15,9,Obese,148/98,94,1500,Sleep Apnea
+49,48,Male,Software Engineer,6.5,6,45,7,Normal,125/82,74,6500,None
+50,48,Female,Doctor,7.8,8,75,3,Normal,114/76,64,12500,None
