@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuthStore } from "@/store/auth.store";
@@ -7,7 +8,7 @@ import { authApi } from "@/lib/api";
 import { Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
 
-export default function GoogleSuccessPage() {
+function GoogleSuccessHandler() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { setAuth } = useAuthStore();
@@ -22,7 +23,6 @@ export default function GoogleSuccessPage() {
       return;
     }
 
-    // Store tokens then fetch user
     if (typeof window !== "undefined") {
       localStorage.setItem("access_token", accessToken);
       localStorage.setItem("refresh_token", refreshToken);
@@ -47,5 +47,17 @@ export default function GoogleSuccessPage() {
         <p className="text-gray-400">Completing Google sign-in…</p>
       </div>
     </div>
+  );
+}
+
+export default function GoogleSuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#0a0a1a] flex items-center justify-center">
+        <Loader2 className="w-10 h-10 text-indigo-400 animate-spin" />
+      </div>
+    }>
+      <GoogleSuccessHandler />
+    </Suspense>
   );
 }
