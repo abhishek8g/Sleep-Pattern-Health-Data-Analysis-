@@ -6,6 +6,7 @@ export const api = axios.create({
   baseURL: API_URL,
   headers: { "Content-Type": "application/json" },
   withCredentials: false,
+  timeout: 60000, // 60 seconds — Render free tier needs time to wake up
 });
 
 // ─── Request Interceptor (attach token) ──────────────────────────────────
