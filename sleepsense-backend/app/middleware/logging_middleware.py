@@ -12,7 +12,8 @@ logger = logging.getLogger(__name__)
 class ActivityLoggingMiddleware(BaseHTTPMiddleware):
     """Log all API requests to the activity log."""
 
-    SKIP_PATHS = ["/health", "/docs", "/openapi.json", "/redoc", "/favicon.ico"]
+    SKIP_PATHS = ["/health", "/docs", "/openapi.json", "/redoc", "/favicon.ico",
+                  "/api/v1/auth/login", "/api/v1/auth/register"]
 
     async def dispatch(self, request: Request, call_next):
         start_time = time.time()
