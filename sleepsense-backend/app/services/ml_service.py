@@ -59,15 +59,26 @@ def prepare_features(df: pd.DataFrame, target_col: str):
     df = df.copy()
     label_encoders = {}
 
+    # Drop non-numeric columns that can't be easily encoded
     for col in df.columns:
         if df[col].dtype == "object":
-            le = LabelEncoder()
-            df[col] = le.fit_transform(df[col].astype(str))
-            label_encoders[col] = le
+            try:
+                le = LabelEncoder()
+                df[col] = le.fit_transform(df[col].astype(str))
+                label_encoders[col] = le
+            except Exception:
+                df = df.drop(columns=[col])
 
     df = df.dropna()
+
     if target_col not in df.columns:
-        raise ValueError(f"Target column '{target_col}' not found")
+        # Try to find a similar column
+        matches = [c for c in df.columns if target_col.replace("_", " ").lower() in c.lower()]
+        if matches:
+            target_col = matches[0]
+        else:
+            # Use last column as target
+            target_col = df.columns[-1]
 
     X = df.drop(columns=[target_col])
     y = df[target_col]

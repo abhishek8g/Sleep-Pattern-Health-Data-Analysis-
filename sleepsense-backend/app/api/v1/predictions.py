@@ -40,12 +40,12 @@ def create_prediction(
     db.commit()
     db.refresh(prediction)
 
-    # Determine target column from type
+    # Determine target column from type — map to actual CSV column names
     target_map = {
         "sleep_quality": "sleep_quality",
         "stress_level": "stress_level",
         "heart_rate_risk": "heart_rate",
-        "lifestyle_score": "lifestyle_score",
+        "lifestyle_score": "daily_steps",
     }
     target_col = data.target_column or target_map.get(data.prediction_type.value, "sleep_quality")
 
