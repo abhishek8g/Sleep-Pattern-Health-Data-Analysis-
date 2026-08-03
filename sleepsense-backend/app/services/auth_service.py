@@ -48,11 +48,17 @@ def register_user(db: Session, user_data: UserCreate) -> User:
     db.commit()
     db.refresh(user)
 
-    # Send verification email (non-blocking)
-    try:
-        send_verification_email(user.email, user.full_name, otp)
-    except Exception as e:
-        logger.warning(f"Could not send verification email: {e}")
+    # Send email in background thread — never block the response
+    import threading
+    _email = user.email
+    _name = user.full_name
+    _otp = otp
+    def _send():
+        try:
+            send_verification_email(_email, _name, _otp)
+        except Exception as e:
+            logger.warning(f"Email send failed (non-blocking): {e}")
+    threading.Thread(target=_send, daemon=True).start()
 
     return user
 
@@ -129,7 +135,9 @@ def request_password_reset(db: Session, email: str) -> bool:
 
     reset_link = f"{settings.FRONTEND_URL}/reset-password?token={token}"
     try:
-        send_reset_password_email(user.email, user.full_name, reset_link)
+        import threading
+        _e, _n, _l = user.email, user.full_name, reset_link
+        threading.Thread(target=lambda: send_reset_password_email(_e, _n, _l), daemon=True).start()
     except Exception as e:
         logger.warning(f"Could not send reset email: {e}")
     return True
@@ -164,7 +172,9 @@ def resend_otp(db: Session, email: str) -> bool:
     db.commit()
 
     try:
-        send_verification_email(user.email, user.full_name, otp)
+        import threading
+        _e, _n, _o = user.email, user.full_name, otp
+        threading.Thread(target=lambda: send_verification_email(_e, _n, _o), daemon=True).start()
     except Exception as e:
         logger.warning(f"Could not send OTP email: {e}")
     return True
